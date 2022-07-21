@@ -86,10 +86,13 @@ internal class Transformer(private val cache: Cache) {
             if (scanResult.SSID == null) String.EMPTY else scanResult.SSID,
             if (scanResult.BSSID == null) String.EMPTY else scanResult.BSSID
         )
+        val wiFiLoad = if (buildMinVersionR()) WiFiLoad(cacheResult.scanResult.informationElements) else WiFiLoad.EMPTY;
         return WiFiDetail(
             wiFiIdentifier,
             if (scanResult.capabilities == null) String.EMPTY else scanResult.capabilities,
-            wiFiSignal
+            wiFiSignal,
+            WiFiAdditional.EMPTY,
+            wiFiLoad
         )
     }
 

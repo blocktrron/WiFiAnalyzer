@@ -56,6 +56,7 @@ class AccessPointDetail {
         setViewCompact(view, wiFiDetail, false)
         setViewExtra(view, wiFiDetail)
         setViewCapabilitiesLong(view, wiFiDetail)
+        setViewWiFiLong(view, wiFiDetail)
         setViewVendorLong(view, wiFiDetail.wiFiAdditional)
         setViewWiFiBand(view, wiFiDetail.wiFiSignal)
         setView80211mc(view, wiFiDetail.wiFiSignal)
@@ -63,6 +64,25 @@ class AccessPointDetail {
         setTimestamp(view, wiFiDetail.wiFiSignal)
         enableTextSelection(view)
         return view
+    }
+
+    private fun setViewWiFiLong(view: View, wiFiDetail: WiFiDetail) {
+        val connectedClientsView = view.findViewById<TextView>(R.id.connectedClients)
+        val apLoadView = view.findViewById<TextView>(R.id.apLoad)
+
+        if (wiFiDetail.wiFiLoad.clients >= 0) {
+            connectedClientsView.text = "Connected Clients: ${wiFiDetail.wiFiLoad.clients}"
+            connectedClientsView.visibility = View.VISIBLE
+        } else {
+            connectedClientsView.visibility = View.GONE
+        }
+
+        if (wiFiDetail.wiFiLoad.load >= 0) {
+            apLoadView.text = "AP Load: ${wiFiDetail.wiFiLoad.load}%"
+            apLoadView.visibility = View.VISIBLE
+        } else {
+            apLoadView.visibility = View.GONE
+        }
     }
 
     private fun enableTextSelection(view: View) =
